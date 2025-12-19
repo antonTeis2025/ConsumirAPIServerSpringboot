@@ -1,5 +1,7 @@
 package anton.teis.consumirserver;
 
+import anton.teis.consumirserver.models.Joke;
+import anton.teis.consumirserver.models.Quote;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationRunner;
@@ -20,21 +22,42 @@ public class ConsumirServerApplication {
         SpringApplication.run(ConsumirServerApplication.class, args);
     }
 
+//    @Bean
+//    @Profile("!test")
+//    public ApplicationRunner run(RestClient.Builder builder) {
+//        RestClient restClient = builder.
+//                baseUrl("http://localhost:8090")
+//                .build();
+//
+//        return args -> {
+//            Quote quote = restClient
+//                    .get()
+//                    .uri("/api/random")
+//                    .retrieve()
+//                    .body(Quote.class);
+//
+//            log.info(quote.toString());
+//        };
+//    }
+
     @Bean
     @Profile("!test")
     public ApplicationRunner run(RestClient.Builder builder) {
         RestClient restClient = builder.
-                baseUrl("http://localhost:8090")
+                baseUrl("https://api.chucknorris.io")
                 .build();
 
         return args -> {
-            Quote quote = restClient
+            Joke joke = restClient
                     .get()
-                    .uri("/api/random")
+                    .uri("/jokes/random")
                     .retrieve()
-                    .body(Quote.class);
+                    .body(Joke.class);
 
-            log.info(quote.toString());
+            System.out.println(String.format("\n[+] Broma: %s \n", joke.value()));
+
+            log.info(joke.toString());
+
         };
     }
 

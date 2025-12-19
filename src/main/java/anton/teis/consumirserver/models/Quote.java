@@ -1,4 +1,4 @@
-package anton.teis.consumirserver;
+package anton.teis.consumirserver.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
